@@ -4,7 +4,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const webpack = require('webpack')
-
+console.log(`MODE:: ${process.env.NODE_ENV}`)
 const files = globby.sync('./dist/web/*/*.js')
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -37,7 +37,7 @@ plugins.push(
 
 module.exports = {
   entry: entries,
-  mode: process.env.NODE_ENV || 'development',
+  mode: 'production', //process.env.NODE_ENV || 'development',
   devtool: 'source-map',
   target: ["browserslist"],
   output: {
@@ -88,7 +88,7 @@ module.exports = {
   },
   optimization: {
     moduleIds: 'deterministic',
-    minimize: isProd,
+    minimize: true, //isProd,
     minimizer: [
       new TerserPlugin({
         extractComments: false,

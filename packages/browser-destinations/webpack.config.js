@@ -40,7 +40,7 @@ module.exports = {
   mode: process.env.NODE_ENV || 'development',
   devtool: 'source-map',
   output: {
-    filename: process.env.NODE_ENV === 'development' ? '[name].js' : '[name]/[contenthash].js',
+    filename: process.env.NODE_ENV === 'development' ? '[name].js' : '[name]/[name].js',
     path: path.resolve(__dirname, 'dist/web'),
     publicPath: 'auto', // Needed for customers using custom CDNs with analytics.js
     library: {
