@@ -12,9 +12,11 @@ const entries = files.reduce((acc, current) => {
   const [_dot, _src, _destinations, destination, ..._rest] = current.split('/')
   return {
     ...acc,
-    [destination]: current
+    [destination]: {import: current, dependOn: 'vendor'}
   }
-}, {})
+}, {
+  vendor: ["tslib", "@segment/actions-core"]
+})
 
 const plugins = [new webpack.DefinePlugin({ 'process.env.ASSET_ENV': JSON.stringify(process.env.ASSET_ENV) })]
 if (isProd) {
@@ -39,6 +41,7 @@ module.exports = {
   entry: entries,
   mode: process.env.NODE_ENV || 'development',
   devtool: 'source-map',
+  target: ["browserslist"],
   output: {
     filename: process.env.NODE_ENV === 'development' ? '[name].js' : '[name]/[contenthash].js',
     path: path.resolve(__dirname, 'dist/web'),
@@ -49,8 +52,23 @@ module.exports = {
   },
   module: {
     rules: [
+      // {
+      //   test: /\.js$/,
+      //   use: [{
+      //     loader: 'babel-loader',
+      //     options: {
+      //       presets: [['@babel/preset-env', {debug: true}]],
+      //       plugins: [
+      //         ['@babel/plugin-transform-runtime', {
+      //           helpers: true,
+      //           regenerator: true
+      //         }]
+      //       ]
+      //     }
+      //   }]
+      // },
       {
-        test: /\.ts$/,
+        test: /\.(j|t)s$/,
         use: [
           {
             loader: 'ts-loader',

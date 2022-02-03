@@ -47,6 +47,7 @@
     "@types/amplitude-js": "^7.0.1",
     "@types/jest": "^27.0.0",
     "babel-jest": "^27.3.1",
+    "browserslist": "^4.19.1",
     "compression-webpack-plugin": "^7.1.2",
     "concurrently": "^6.3.0",
     "globby": "^11.0.2",
@@ -83,5 +84,8 @@
       "<rootDir>/test/setup-after-env.ts"
     ],
     "forceExit": true
-  }
+  },
+  "browserslist": [
+    "ie 11"
+  ]
 }
