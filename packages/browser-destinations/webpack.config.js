@@ -17,9 +17,6 @@ const entries = files.reduce((acc, current) => {
 }, {})
 
 const plugins = [new webpack.DefinePlugin({ 'process.env.ASSET_ENV': JSON.stringify(process.env.ASSET_ENV) })]
-// if (isProd) {
-//   plugins.push(new CompressionPlugin())
-// }
 
 if (process.env.ANALYZE) {
   plugins.push(
@@ -40,12 +37,12 @@ module.exports = {
   mode: process.env.NODE_ENV || 'development',
   devtool: 'source-map',
   output: {
-    filename: process.env.NODE_ENV === 'development' ? '[name].js' : '[name]/[name].js',
+    filename: process.env.NODE_ENV === 'development' ? '[name]/[name].js' : '[name]/[contenthash].js',
     path: path.resolve(__dirname, 'dist/web'),
     publicPath: 'auto', // Needed for customers using custom CDNs with analytics.js
     library: {
       name: '[name]Destination',
-      type: 'commonjs',
+      type: 'umd',
       export: 'default'
     }
   },
@@ -88,22 +85,5 @@ module.exports = {
   performance: {
     hints: 'warning'
   },
-  // optimization: {
-  //   moduleIds: 'deterministic',
-  //   minimize: isProd,
-  //   minimizer: [
-  //     new TerserPlugin({
-  //       extractComments: false,
-  //       terserOptions: {
-  //         ecma: '2015',
-  //         mangle: true,
-  //         compress: true,
-  //         output: {
-  //           comments: false
-  //         }
-  //       }
-  //     })
-  //   ]
-  // },
   plugins
 }
